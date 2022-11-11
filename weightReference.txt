@@ -1,0 +1,4 @@
+inputVector, weights1_1Values, weights1_2Values, weights1_3Values, weights1_4Values, weights1_5Values, weights2_1Values, weights2_2Values, weights2_3Values, weights2_4Values, weights3_1Values, weights2_2Values, weights2_3Values, weights2_4Values, weight3_1Values, weight3_2Values, weight3_3Values, weight4_4Values
+
+
+inputVector, weights1_1Values, weights1_2Values, weights1_3Values, weights1_4Values, weights1_5Values, weights2_1Values, weights2_2Values, weights2_3Values, weights2_4Values, weights3_1Values, weights3_2Values, weights3_3Values, weights3_4Values
