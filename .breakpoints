@@ -1,5 +1,13 @@
 {
   "files": {
+    "inputFormatter.py": [
+      {
+        "id": "7eb80d12-19b1-412f-89b0-79d7d8d357dc",
+        "line": 61,
+        "version": 5857,
+        "index": 1421
+      }
+    ],
     "neuralInterfaceRearranged.py": [
       {
         "id": "a700284e-daf1-4a01-9075-f05d1d2e441c",

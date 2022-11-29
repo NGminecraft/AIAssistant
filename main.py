@@ -14,6 +14,7 @@ Dot Product = (Input vector 1 * weight vector 1) + (Input vector 2 * input vecto
 import json
 import neuralInterface"""
 import inputFormatter
+import audioInput
 """
 # data = [[[0, 2, 0, 0, 0.5], [0, 0, 2.5, 0, 0.5], [2.5, 0, 0, 0, 0.5], [0.1, 0, 0.1, 2, 1.3]], [[2, -1, -1, 1.2], [0.3, 2, 0.4, 1.2], [-1, -1, 2, 1.2], [0, 0, 0, 1.55]], [[-1, -1, 0.5, 0], [-1, 1.5, -1, 0], [1.5, -1, -1, 0], [0, 0, 0, 1.2]]]
 
@@ -31,6 +32,7 @@ def storer():
     values = layer1Weights + layer2Weights + layer3Weights + possibleInputs
     json.dump(values, d)
 storer()"""
+audioInput.main()
 inputFormatter.main()
 
 #how did you figure all og this out? (i'm guessing its google) - ben

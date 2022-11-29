@@ -2,48 +2,78 @@ def entireJson():
     from json import load
     with open("weights.json", "r") as w:
         return load(w)
-    
 
-def saving(keywords, values):
+
+def saving(values):
     print("Saving")
     from json import dump
-    d = open('weights.json', 'w')
-    values.remove(values[-1])
-    values.append(keywords)
-    dump(values, d)
+    #   d = open('weights.json', 'w')
+    #   dump(values, d)
+    with open('weights.json', 'w') as d:
+        dump(values, d)
     print("Done")
+    quit()
 
 
 def didntWork(output, query, keywords):
     # Scanning through the query list and keywords to find what ran
     queryList = str.split(query)
     keywordsUsed = [""]
+    values = entireJson()
     for n in queryList:
         if n in keywords:
-            keywordsUsed.append(n)
-    
+            if n == " ":
+                pass
+            else:
+                keywordsUsed.append(n)
+
     # increase weight value by 0.1
-    
-    saving(keywords, entireJson())
+    location = 0
+    for x in keywordsUsed:
+        if x in keywords:
+            location = keywords.index(x)
+            i = 0
+            while i < len(values[0]):
+                values[0][i][location] += 0.1
+                i += 1
+    values[-1] = keywords
+    saving(values)
+
+
+def valueAdjuster(newKeywords, keywords):
+    newLen = len(newKeywords)
+    oldLen = len(keywords)
+    json = entireJson()
+    a = 0
+    if oldLen != newLen:
+        needToAdd = newLen - oldLen
+        for i in json[0]:
+            while a < needToAdd:
+                i.append(0)
+                a += 1
+        json[0] = i
+        saving(keywords, json)
+    else:
+        json.remove(entireJson[-1])
+        saving(json)
 
 
 def worked(query, keywords):
     # Looking for unknown keywords
     queryList = str.split(query)
     counter = 0
-    while counter < len(queryList):
-        if queryList[counter] in keywords:
-            counter += 1
+    newKeywords = [""]
+    json = entireJson()
+    for x in queryList:
+        if x in keywords:
+            pass
         else:
-            if queryList[counter].isnumeric() == True:
-                counter += 1
+            if x.capitalize() in keywords:
+                pass
             else:
-                if queryList[counter].capitalize() in keywords:
-                    counter += 1
-                else:
-                    keywords.append(str(queryList[counter].capitalize()))
-                    counter += 1
-    saving(keywords, entireJson())
+                json[-1].append(x)
+                saving(entireJson())
+    saving(json)
 
 
 def output1():
@@ -56,8 +86,9 @@ def output1():
         halfDay = "AM"
         if hours == 12:
             halfDay = "PM"
-    
-    print("The time is", hours, ":", time.strftime("%M", time.localtime()), halfDay, "with", time.strftime("%S", time.localtime()), "seconds.")
+
+    print("The time is", hours, ":", time.strftime("%M", time.localtime()),
+          halfDay, "with", time.strftime("%S", time.localtime()), "seconds.")
 
 
 def output2():
@@ -71,8 +102,10 @@ def output2():
         halfDay = "AM"
         if hours == 12:
             halfDay = "PM"
-    
-    print("The day today is", date.today(), "and the time is", hours, ":", time.strftime("%M", time.localtime()), halfDay, "with", time.strftime("%S", time.localtime()), "seconds.")
+
+    print("The day today is", date.today(), "and the time is", hours, ":",
+          time.strftime("%M", time.localtime()), halfDay, "with",
+          time.strftime("%S", time.localtime()), "seconds.")
 
 
 def output3():
@@ -93,13 +126,12 @@ def mathSolver(first, operator, second):
     try:
         int(solution)
     except:
-        print("The answer is", solution)  
+        print("The answer is", solution)
     else:
         print("The answer is", int(solution))
 
 
-
-def output4(query, parenthasesOpen = None, parenthasesClose = None):
+def output4(query, parenthasesOpen=None, parenthasesClose=None):
     if parenthasesOpen != None:
         containsMath = query.split[parenthasesOpen + 1]
     containsMath = query.split()
@@ -164,7 +196,6 @@ def neuron1Creater():
     pass
 
 
-
 def weightsCreator(b, a, i):
     # Layer, neuron value, and weight value
     from json import load
@@ -189,14 +220,30 @@ def brains(vector):
     neuron1_2 = ReLU(neuronSolver(0, 1, vector))
     neuron1_3 = ReLU(neuronSolver(0, 2, vector))
     neuron1_4 = ReLU(neuronSolver(0, 3, vector))
-    neuron2_1 = (weightsCreator(1, 0, 0) * neuron1_1) + (weightsCreator(1, 0, 1) * neuron1_2) + (weightsCreator(1, 0, 2) * neuron1_3) + (weightsCreator(1, 0, 3) * neuron1_4)
-    neuron2_2 = (weightsCreator(1, 1, 0) * neuron1_1) + (weightsCreator(1, 1, 1) * neuron1_2) + (weightsCreator(1, 1, 2) * neuron1_3) + (weightsCreator(1, 1, 3) * neuron1_4)
-    neuron2_3 = (weightsCreator(1, 2, 0) * neuron1_1) + (weightsCreator(1, 2, 1) * neuron1_2) + (weightsCreator(1, 2, 2) * neuron1_3) + (weightsCreator(1, 2, 3) * neuron1_4)
-    neuron2_4 = (weightsCreator(1, 3, 0) * neuron1_1) + (weightsCreator(1, 3, 1) * neuron1_2) + (weightsCreator(1, 3, 2) * neuron1_3) + (weightsCreator(1, 3, 3) * neuron1_4)
-    neuron3_1 = (weightsCreator(2, 0, 0) * neuron2_1) + (weightsCreator(2, 0, 1) * neuron2_2) + (weightsCreator(2, 0, 2) * neuron2_3) + (weightsCreator(2, 0, 3) * neuron2_4)
-    neuron3_2 = (weightsCreator(2, 1, 0) * neuron2_1) + (weightsCreator(2, 1, 1) * neuron2_2) + (weightsCreator(2, 1, 2) * neuron2_3) + (weightsCreator(2, 1, 3) * neuron2_4)
-    neuron3_3 = (weightsCreator(2, 2, 0) * neuron2_1) + (weightsCreator(2, 2, 1) * neuron2_2) + (weightsCreator(2, 2, 2) * neuron2_3) + (weightsCreator(2, 2, 3) * neuron2_4)
-    neuron3_4 = (weightsCreator(2, 3, 0) * neuron2_1) + (weightsCreator(2, 3, 1) * neuron2_2) + (weightsCreator(2, 3, 2) * neuron2_3) + (weightsCreator(2, 3, 3) * neuron2_4)
+    neuron2_1 = (weightsCreator(1, 0, 0) * neuron1_1) + (weightsCreator(
+        1, 0, 1) * neuron1_2) + (weightsCreator(1, 0, 2) * neuron1_3) + (
+            weightsCreator(1, 0, 3) * neuron1_4)
+    neuron2_2 = (weightsCreator(1, 1, 0) * neuron1_1) + (weightsCreator(
+        1, 1, 1) * neuron1_2) + (weightsCreator(1, 1, 2) * neuron1_3) + (
+            weightsCreator(1, 1, 3) * neuron1_4)
+    neuron2_3 = (weightsCreator(1, 2, 0) * neuron1_1) + (weightsCreator(
+        1, 2, 1) * neuron1_2) + (weightsCreator(1, 2, 2) * neuron1_3) + (
+            weightsCreator(1, 2, 3) * neuron1_4)
+    neuron2_4 = (weightsCreator(1, 3, 0) * neuron1_1) + (weightsCreator(
+        1, 3, 1) * neuron1_2) + (weightsCreator(1, 3, 2) * neuron1_3) + (
+            weightsCreator(1, 3, 3) * neuron1_4)
+    neuron3_1 = (weightsCreator(2, 0, 0) * neuron2_1) + (weightsCreator(
+        2, 0, 1) * neuron2_2) + (weightsCreator(2, 0, 2) * neuron2_3) + (
+            weightsCreator(2, 0, 3) * neuron2_4)
+    neuron3_2 = (weightsCreator(2, 1, 0) * neuron2_1) + (weightsCreator(
+        2, 1, 1) * neuron2_2) + (weightsCreator(2, 1, 2) * neuron2_3) + (
+            weightsCreator(2, 1, 3) * neuron2_4)
+    neuron3_3 = (weightsCreator(2, 2, 0) * neuron2_1) + (weightsCreator(
+        2, 2, 1) * neuron2_2) + (weightsCreator(2, 2, 2) * neuron2_3) + (
+            weightsCreator(2, 2, 3) * neuron2_4)
+    neuron3_4 = (weightsCreator(2, 3, 0) * neuron2_1) + (weightsCreator(
+        2, 3, 1) * neuron2_2) + (weightsCreator(2, 3, 2) * neuron2_3) + (
+            weightsCreator(2, 3, 3) * neuron2_4)
     return [neuron3_1, neuron3_2, neuron3_3, neuron3_4]
 
 
@@ -218,7 +265,7 @@ def vectorCreator(query):
     return vector
 
 
-def main(query = ""):
+def main(query=""):
     query = input("What would you like to do? ")
     inputVector = vectorCreator(query)
     outputList = brains(inputVector)
